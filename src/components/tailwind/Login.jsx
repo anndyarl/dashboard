@@ -1,68 +1,49 @@
-import Layout from "hocs/layout/Layout"
-import { connect } from "react-redux"
+/*
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+*/
 import { LockClosedIcon } from '@heroicons/react/20/solid'
-import { useState, useEffect }from 'react'
-import { check_authenticated, load_user, login, refresh } from "redux/actions/auth/auth";
-import { Link, Navigate } from "react-router-dom";
 
-function Home({
-    login,
-    isAuthenticated,
-    loading,
-    refresh,
-    check_authenticated,
-    load_user,
-   
-}){   
-
-  useEffect(()=>{
-    isAuthenticated ? <></>:
+export default function Example() {
+  return (
     <>
-    {refresh()}
-    {check_authenticated()}
-    {load_user()}
-    </>
-},[])
+      {/*
+        This example requires updating your template:
 
-    // definición de estados, la info se pasa a setFormData y la guarda en diferentes variables
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const {
-        email,
-        password
-    } = formData;
-
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });      
-    
-
-    const onSubmit = e => {
-        e.preventDefault();  
-        // console.log(formData) 
-        login(email, password)    
-    }
-
-    if(isAuthenticated){
-      return <Navigate to='/dashboard/'/>
-    }
-
-    return(
-        <>
-          <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        ```
+        <html class="h-full bg-gray-50">
+        <body class="h-full">
+        ```
+      */}
+      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8">
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://bafybeiczl4dcxupma2zeyilkukfl4yge64axnhajd722wxgin62mtts6uy.ipfs.w3s.link/murkivamarketing.png"
-              alt="Yournalup"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt="Your Company"
             />
-            {/* <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Sign in to your account
             </h2>
-           */}
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Or{' '}
+              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                start your 14-day free trial
+              </a>
+            </p>
           </div>
-          <form  onSubmit={e=>{onSubmit(e)}} className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" action="#" method="POST">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -72,10 +53,8 @@ function Home({
                 <input
                   id="email-address"
                   name="email"
-                  value={email}
                   type="email"
-                  onChange={e=>onChange(e)}
-                //   autoComplete="email"
+                  autoComplete="email"
                   required
                   className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Email address"
@@ -89,9 +68,7 @@ function Home({
                   id="password"
                   name="password"
                   type="password"
-                  value={password}
-                  onChange={e=>onChange(e)}
-                //   autoComplete="current-password"
+                  autoComplete="current-password"
                   required
                   className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Password"
@@ -113,9 +90,9 @@ function Home({
               </div>
 
               <div className="text-sm">
-                <Link to="/forgot_password" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -131,23 +108,8 @@ function Home({
               </button>
             </div>
           </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Start a 14 day free trial</a>
-         </p>
         </div>
       </div>
-        </>
-    )
+    </>
+  )
 }
-const mapStateprops=state=>({
-  isAuthenticated: state.auth.isAuthenticated,
-  loading: state.auth.loading
-})
-
-export default connect(mapStateprops,{
-    login,
-    refresh,
-    check_authenticated,
-    load_user,
-})(Home)
